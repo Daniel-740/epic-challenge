@@ -9,23 +9,23 @@ export const Menu = () => {
      return(
           <AppBar position="static">
           <Toolbar>
-               <Button color="inherit">
-                    <Link to='/' className='menu__link'>
+               <Link to='/' className='menu__link'>
+                    <Button color="inherit">
                          Home
-                    </Link>
-               </Button>
+                    </Button>
+               </Link>
                
-               <Button color="inherit">
-                    <Link to='cameras' className='menu__link'>
+               <Link to='/cameras' className='menu__link'>
+                    <Button color="inherit">
                          Cameras
-                    </Link>
-               </Button>
+                    </Button>
+               </Link>
 
-               <Button>
-                    <Link to='camera-types' className='menu__link'>
+               <Link to='/camera-types' className='menu__link'>
+                    <Button color='inherit'>
                          Camera Types
-                    </Link>
-               </Button>
+                    </Button>
+               </Link>
           </Toolbar>
         </AppBar>
      )

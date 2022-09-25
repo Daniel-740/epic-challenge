@@ -13,8 +13,12 @@ import Box from '@mui/material/Box';
 import { connect  } from "react-redux";
 import { deleteCameraAction } from "../../store/camera/actions";
 import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import { Link } from 'react-router-dom';
+
 
 class List extends Component {
+
      handleDelete = (id) => {
        this.props.deleteCameraAction(id);
      };
@@ -22,54 +26,65 @@ class List extends Component {
        const { cameras } = this.props;
    
        return (
-        <Container maxWidth={false}>
-        <Box marginTop={'1rem'}>
-         <TableContainer>
-           <Table aria-label="simple table">
-             <TableHead>
-               <TableRow>
-                 <TableCell>Id</TableCell>
-                 <TableCell>Name</TableCell>
-                 <TableCell>Camera Type</TableCell>
-                 <TableCell>Actions</TableCell>
-               </TableRow>
-             </TableHead>
-             <TableBody>
-               {cameras.map((row) => (
-                 <TableRow key={row.name}>
-                   <TableCell component="th" scope="row">
-                     {row.id}
-                   </TableCell>
-                   <TableCell component="th" scope="row">
-                     {row.name}
-                   </TableCell>
-                   <TableCell component="th" scope="row">
-                     {row.cameraType}
-                   </TableCell>
-                   <TableCell component="th" scope="row">
-                     <ButtonGroup
-                       color="primary"
-                       aria-label="outlined primary button group"
-                     >
-                       <Button variant="contained">
-                         <EditIcon />
-                       </Button>
-                       <Button
-                         variant="contained"
-                         color="secondary"
-                         onClick={() => this.handleDelete(row.id)}
-                       >
-                         <DeleteIcon />
-                       </Button>
-                     </ButtonGroup>
-                   </TableCell>
-                 </TableRow>
-               ))}
-             </TableBody>
-           </Table>
-         </TableContainer>
-         </Box>
-         </Container>
+        <>
+         <Grid margin={'1.5rem 1rem'} sx={{display: 'flex', justifyContent: 'end'}}>
+            <Grid item xs={4} marginRight="1rem">
+            <Link to='/camera'>
+                    <Button variant="outlined">
+                         Add Camera
+                    </Button>
+                </Link>
+            </Grid>
+          </Grid>      
+          <Container maxWidth={false}>
+          <Box marginTop={'1rem'}>
+          <TableContainer>
+            <Table aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Id</TableCell>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Camera Type</TableCell>
+                  <TableCell>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {cameras.map((row) => (
+                  <TableRow key={row.name}>
+                    <TableCell component="th" scope="row">
+                      {row.id}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {row.name}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {row.cameraType}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <ButtonGroup
+                        color="primary"
+                        aria-label="outlined primary button group"
+                      >
+                        <Button variant="contained">
+                          <EditIcon />
+                        </Button>
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          onClick={() => this.handleDelete(row.id)}
+                        >
+                          <DeleteIcon />
+                        </Button>
+                      </ButtonGroup>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          </Box>
+          </Container>
+        </>
        );
      }
    }

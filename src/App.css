@@ -5,3 +5,18 @@ a{
 .menu__link{
   color: #fff
 }
+
+.mt1{
+  margin-top: .5rem;
+}
+.mt2{
+  margin-top: 1rem !important;
+}
+
+.mb1{
+  margin-bottom: .5rem;
+}
+
+.mb2{
+  margin-bottom: 1rem !important;
+}
