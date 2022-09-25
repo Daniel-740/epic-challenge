@@ -5,7 +5,7 @@ La aplicación se creó con React + Redux para manejar el estado. Sin embargo, c
 
 ### Funcionalidad Tipos de camara:
 
-- Crear un listado de tipo camaras donde se visualicen el nombre y descripción de las mismas.
+- Crear un listado de tipo camaras donde se visualicen el nombre y descripción de las mismas. (DONE)
 
 - Añadir un campo de busqueda al listado que permita filtrar por nombre o descripción de acuerdo al criterio ingresado.
 

@@ -1,14 +1,13 @@
-import { useRef } from "react";
 import { Button } from "@material-ui/core";
-import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Typography from '@mui/material/Typography';
-import OutlinedInput from "@mui/material/OutlinedInput";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
+import TextField from '@mui/material/TextField';
+
 
 import { addCameraAction } from "../../store/camera/actions";
 
@@ -26,7 +25,7 @@ export const CameraForm = ({cameraSchema}) => {
        dispatch(addCameraAction(data));
      };
      return (
-       <form onSubmit={handleSubmit(onSubmitCamera)}>
+       <form onSubmit={handleSubmit(onSubmitCamera)} className="mt2">
          <div>
            <Typography variant="h4" gutterBottom>
            Camara
@@ -35,29 +34,26 @@ export const CameraForm = ({cameraSchema}) => {
              <InputLabel id="demo-simple-select-helper-label">
                Camera name
              </InputLabel>
-             <Controller
-               label="Name"
-               defaultValue=""
-               id="component-outlined"
-               render={({ field }) => <OutlinedInput {...field} />}
-               name="name"
-               control={control}
-             />
+             <TextField
+/*                 error */
+                id="outlined-error-helper-text"
+                defaultValue="test camera"
+/*                 helperText="error" */
+              />
            </FormControl>
-           <FormControl fullWidth>
-             <InputLabel id="demo-simple-select-helper-label">
+           <FormControl fullWidth className="mt2 mb2">
+             <InputLabel id="demo-simple-select-helper-label" >
                Camera type
              </InputLabel>
-             <Controller
-               defaultValue=""
-               render={({ field }) => (
-                 <Select
-                   labelId="demo-simple-select-standard-label"
-                   id="demo-simple-select-standard"
-                   label="Camera Type"
-                   {...field}
-                 >
-                   <MenuItem value="">
+             <TextField
+                id="outlined-select-currency"
+                select
+                label="Select"
+/*                 value={currency}
+                onChange={handleChange} */
+                helperText="Please select your type camera"
+              >
+                <MenuItem value="">
                      <em>None</em>
                    </MenuItem>
                    {cameraTypes.map((cameraType) => (
@@ -66,13 +62,9 @@ export const CameraForm = ({cameraSchema}) => {
                        value={cameraType.id}
                      >{`${cameraType.name} - ${cameraType.description}`}</MenuItem>
                    ))}
-                 </Select>
-               )}
-               name="cameraType"
-               control={control}
-             />
+              </TextField>
            </FormControl>
-           <Button variant="contained" color="primary" type="submit">
+           <Button variant="contained" color="primary" type="submit" className="mt2">
              Add camera
            </Button>
          </div>

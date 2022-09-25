@@ -1,6 +1,7 @@
 import React from "react";
 import { CameraForm } from "../../components/camera/CameraForm";
 import * as yup from "yup";
+import Container from '@mui/material/Container';
 
 export const Camera = () => {
 
@@ -14,5 +15,9 @@ export const Camera = () => {
           cameraType: yup.string().nullable(),
         });
 
-     return <CameraForm cameraSchema={cameraSchema}/>
+     return (
+        <Container>
+          <CameraForm cameraSchema={cameraSchema}/>
+        </Container>
+     )
 }

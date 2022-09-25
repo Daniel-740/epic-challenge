@@ -3,7 +3,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Typography from '@mui/material/Typography';
 import { Button } from "@material-ui/core";
 import TextField from "@mui/material/TextField";
-import { Field, Form, Formik } from "formik";
+import { Form, Formik } from "formik";
 import { useDispatch } from "react-redux";
 
 import { addCameraTypeAction } from "../../store/camera/actions";
@@ -15,12 +15,18 @@ export const CameraTypeForm = ({CameraTypeSchema}) => {
      const renderForm = (formik) => {
        return (
          <Form className="cameraType-form">
-           <div>
+           <div className="mt2">
              <Typography variant="h4" gutterBottom>
-             Tipo de Camara
+              Types of cameras
              </Typography>
-             <FormControl fullWidth>
-               <Field
+             <FormControl fullWidth className="mb2">
+             <TextField
+/*                 error */
+                id="outlined-error-helper-text"
+                defaultValue="Name"
+/*                 helperText="error" */
+              />
+{/*                <Field
                  required
                  component={TextField}
                  value={formik.values.name}
@@ -30,10 +36,17 @@ export const CameraTypeForm = ({CameraTypeSchema}) => {
                  id="outlined-required"
                  label="Name"
                  name="name"
-               />
+               /> */}
              </FormControl>
-             <FormControl fullWidth>
-               <Field
+             <FormControl fullWidth className="mb2">
+
+             <TextField
+/*                 error */
+                id="outlined-error-helper-text"
+                defaultValue="description"
+/*                 helperText="error" */
+              />
+{/*                <Field
                  id="outlined-helperText"
                  component={TextField}
                  onChange={(event) => {
@@ -44,7 +57,7 @@ export const CameraTypeForm = ({CameraTypeSchema}) => {
                  name="description"
                  multiline
                  maxRows={4}
-               />
+               /> */}
              </FormControl>
              <Button
                className="submit-button"

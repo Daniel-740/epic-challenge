@@ -1,5 +1,6 @@
 import { CameraTypeForm } from "../../components/cameraType/CameraTypeForm";
 import * as yup from "yup";
+import Container from '@mui/material/Container';
 
 export const CameraType = () =>{
 
@@ -9,5 +10,9 @@ export const CameraType = () =>{
           description: yup.string().required("Description required"),
         });
 
-     return <CameraTypeForm CameraTypeSchema={CameraTypeSchema}/>
+     return (
+          <Container>
+               <CameraTypeForm CameraTypeSchema={CameraTypeSchema}/>
+          </Container>
+     ) 
 }

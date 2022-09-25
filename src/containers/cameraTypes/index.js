@@ -1,6 +1,6 @@
-
+import { CameraTypeList } from "../../components/cameraType/CameraTypeList"
 
 export const CameraTypes = () => {
 
-     return <h1>Test camera types</h1>
+     return <CameraTypeList />
 }
