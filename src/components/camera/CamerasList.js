@@ -6,12 +6,13 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { Button, ButtonGroup } from "@material-ui/core";
-import Paper from "@material-ui/core/Paper";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
+import Box from '@mui/material/Box';
 
 import { connect  } from "react-redux";
 import { deleteCameraAction } from "../../store/camera/actions";
+import Container from '@mui/material/Container';
 
 class List extends Component {
      handleDelete = (id) => {
@@ -21,7 +22,9 @@ class List extends Component {
        const { cameras } = this.props;
    
        return (
-         <TableContainer component={Paper}>
+        <Container maxWidth={false}>
+        <Box marginTop={'1rem'}>
+         <TableContainer>
            <Table aria-label="simple table">
              <TableHead>
                <TableRow>
@@ -65,6 +68,8 @@ class List extends Component {
              </TableBody>
            </Table>
          </TableContainer>
+         </Box>
+         </Container>
        );
      }
    }
