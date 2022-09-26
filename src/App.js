@@ -20,6 +20,7 @@ function App() {
           <Route  path="/camera" element={<Camera />} />
           <Route  path="/cameras" element={<Cameras />} />
           <Route  path="/camera-type" element={<CameraType />} />
+          <Route  path="/camera-type/:id" element={<CameraType />} />
           <Route  path="/camera-types" element={<CameraTypes />} />
         </Routes>
       </BrowserRouter>

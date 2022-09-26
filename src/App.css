@@ -20,3 +20,7 @@ a{
 .mb2{
   margin-bottom: 1rem !important;
 }
+
+.headerColor{
+  background-color: #1976d2 !important;
+}

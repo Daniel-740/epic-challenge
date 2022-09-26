@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 export const Menu = () => {
 
      return(
-          <AppBar position="static">
+          <AppBar position="static" className='headerColor'>
           <Toolbar>
                <Link to='/' className='menu__link'>
                     <Button color="inherit">

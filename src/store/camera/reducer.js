@@ -1,5 +1,16 @@
-import { ADD_CAMERA, ADD_CAMERA_TYPE, DELETE_CAMERA} from './actionsTypes';
-import { setAddCameraType, setAddCamera, setDeleteCamera} from './functions'
+import { 
+  ADD_CAMERA, 
+  ADD_CAMERA_TYPE, 
+  DELETE_CAMERA, 
+  EDIT_CAMERA_TYPE, 
+  DELETE_CAMERA_TYPE} from './actionsTypes';
+
+import { 
+  setAddCameraType, 
+  setAddCamera, 
+  setDeleteCamera, 
+  setEditCameraType, 
+  setDeleteCameraType } from './functions'
 
 const initialState = {
      cameras: [],
@@ -12,6 +23,10 @@ const camerasReducer = (state = initialState, action) => {
          return setAddCamera(state, action.payload);
        case ADD_CAMERA_TYPE:
          return setAddCameraType(state, action.payload);
+       case EDIT_CAMERA_TYPE:
+         return setEditCameraType(state, action.payload);
+       case DELETE_CAMERA_TYPE:
+         return setDeleteCameraType(state, action.payload);
        case DELETE_CAMERA:
          return setDeleteCamera(state, action.payload);
        default:

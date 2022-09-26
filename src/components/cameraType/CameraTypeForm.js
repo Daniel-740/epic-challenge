@@ -1,88 +1,68 @@
-import { useRef } from "react";
 import FormControl from "@material-ui/core/FormControl";
 import Typography from '@mui/material/Typography';
 import { Button } from "@material-ui/core";
 import TextField from "@mui/material/TextField";
 import { Form, Formik } from "formik";
-import { useDispatch } from "react-redux";
 
-import { addCameraTypeAction } from "../../store/camera/actions";
+export const CameraTypeForm = ({CameraTypeSchema, onSubmitCameraType, data}) => {
 
-export const CameraTypeForm = ({CameraTypeSchema}) => {
-     const dispatch = useDispatch();
-     const type = {};
-     const formRef = useRef(null);
-     const renderForm = (formik) => {
+     const renderForm = ({
+        values,
+        errors,
+        handleChange,
+        isSubmitting,
+     }) => {
+
        return (
-         <Form className="cameraType-form">
+      
+         <Form className="cameraType-form"> 
            <div className="mt2">
              <Typography variant="h4" gutterBottom>
               Types of cameras
              </Typography>
              <FormControl fullWidth className="mb2">
              <TextField
-/*                 error */
-                id="outlined-error-helper-text"
-                defaultValue="Name"
-/*                 helperText="error" */
+                error={!!errors.name}
+                id="name"
+                name="name"
+                value={values.name}
+                onChange={handleChange}
+                helperText={errors.name} 
               />
-{/*                <Field
-                 required
-                 component={TextField}
-                 value={formik.values.name}
-                 onChange={(event) => {
-                   formik.setFieldValue("name", event.target.value);
-                 }}
-                 id="outlined-required"
-                 label="Name"
-                 name="name"
-               /> */}
              </FormControl>
              <FormControl fullWidth className="mb2">
 
              <TextField
-/*                 error */
-                id="outlined-error-helper-text"
-                defaultValue="description"
-/*                 helperText="error" */
+                error={!!errors.description}
+                id="description"
+                name="description"
+                value={values.description}
+                onChange={handleChange}
+                helperText={errors.description} 
               />
-{/*                <Field
-                 id="outlined-helperText"
-                 component={TextField}
-                 onChange={(event) => {
-                   formik.setFieldValue("description", event.target.value);
-                 }}
-                 value={formik.values.description}
-                 label="Description"
-                 name="description"
-                 multiline
-                 maxRows={4}
-               /> */}
              </FormControl>
              <Button
                className="submit-button"
                color="primary"
-               disabled={formik.isSubmitting}
+               disabled={isSubmitting}
                type="submit"
                variant="contained"
              >
-               Add Camera type
+               { !data ? 'Add Camera type' : 'Edit Camera Type' }
              </Button>
            </div>
          </Form>
        );
      };
-     const onSubmitCameraType = async (values, { setSubmitting, setErrors }) => {
-       dispatch(addCameraTypeAction(values));
-     };
    
      const getFormikProps = () => {
-       const { name, description } = { ...type };
+       const { name, description, id } = { ...data };
    
        return {
          children: renderForm,
          enableReinitialize: true,
          initialValues: {
+           id,
            name: name || "",
            description: description || "",
          },
@@ -91,5 +71,5 @@ export const CameraTypeForm = ({CameraTypeSchema}) => {
        };
      };
    
-     return <Formik {...getFormikProps()} innerRef={formRef} />;
+     return <Formik {...getFormikProps()} />;
    };
