@@ -9,9 +9,8 @@ import { Button, ButtonGroup } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import Box from '@mui/material/Box';
+import SearchBar from "material-ui-search-bar";
 
-import { connect  } from "react-redux";
-import { deleteCameraAction } from "../../store/camera/actions";
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import { Link } from 'react-router-dom';
@@ -20,11 +19,11 @@ import { Link } from 'react-router-dom';
 class List extends Component {
 
      handleDelete = (id) => {
-       this.props.deleteCameraAction(id);
+       this.props.onDelete(id);
      };
+
      render() {
-          console.log(this.props)
-       const { cameraTypes } = this.props;
+       const { cancelSearch, requestSearch, data, searched, navigate } = this.props;
    
        return (
         <>
@@ -39,6 +38,12 @@ class List extends Component {
           </Grid>      
           <Container maxWidth={false}>
           <Box marginTop={'1rem'}>
+          <SearchBar
+            value={searched}
+            onChange={(searchVal) => requestSearch(searchVal)}
+            onCancelSearch={() => cancelSearch()}
+            className="mb2 mt2"
+          />
           <TableContainer>
             <Table aria-label="simple table">
               <TableHead>
@@ -50,7 +55,7 @@ class List extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {cameraTypes.map((row) => (
+                {data.map((row) => (
                   <TableRow key={row.name}>
                     <TableCell component="th" scope="row">
                       {row.id}
@@ -66,7 +71,7 @@ class List extends Component {
                         color="primary"
                         aria-label="outlined primary button group"
                       >
-                        <Button variant="contained">
+                        <Button variant="contained" onClick={() => navigate(`/camera-type/${row.id}`)}>
                           <EditIcon />
                         </Button>
                         <Button
@@ -90,12 +95,6 @@ class List extends Component {
      }
    }
    
-   const mapStateToProps = (state) => ({
-     cameraTypes: state.camerasReducer.cameraTypes,
-   });
+
    
-   const mapDispatchToProps = {
-     deleteCameraAction,
-   };
-   
- export const CameraTypeList = connect(mapStateToProps, mapDispatchToProps)(List);
+ export const CameraTypeList = List;
