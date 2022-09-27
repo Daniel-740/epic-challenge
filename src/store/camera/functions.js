@@ -16,18 +16,15 @@ const setAddCameraType = (state, camera) => {
 }
 
 const setEditCameraType = (state, camera) => {
-  let inclusionCameraType = state.cameraTypes.map((data) => {
-    if (data.id === camera.id) {
-      data.name = camera.name || data.name
-      data.description = camera.description || data.description
-    }
 
-    return data
-  })
+  const dataCameraType = state.cameraTypes.map(item => item);
+  const index = dataCameraType.findIndex( (item ) => item.id === camera.id);
+
+  dataCameraType[index] = camera;
 
   return {
     ...state,
-    cameraTypes: inclusionCameraType,
+    cameraTypes: dataCameraType,
   }
 }
 
@@ -48,11 +45,28 @@ const setAddCamera = (state, camera) => {
     id,
     name: camera.name,
     cameraType: camera.cameraType,
+    model: camera.model,
+    brand: camera.brand,
+    ubication: camera.ubication,
+    longitude: camera.longitude,
+    latitude: camera.latitude
   })
 
   return {
     ...state,
     cameras: inclusionCamera,
+  }
+}
+
+const setEditCamera = (state,camera) => {
+  const dataCamera = state.cameras.map(item => item);
+  const index = dataCamera.findIndex( (item ) => item.id === camera.id);
+
+  dataCamera[index] = camera;
+
+  return {
+    ...state,
+    cameras: dataCamera,
   }
 }
 
@@ -72,5 +86,6 @@ export {
   setAddCamera, 
   setDeleteCamera, 
   setEditCameraType, 
-  setDeleteCameraType
+  setDeleteCameraType,
+  setEditCamera
 }

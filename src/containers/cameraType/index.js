@@ -6,6 +6,7 @@ import { addCameraTypeAction, editCameraTypeAction } from "../../store/camera/ac
 import { useNavigate, useParams } from 'react-router-dom';
 import { CameraTypeSchema } from "../../helpers/YupSchemas/cameraType";
 import { findById } from "../../helpers/fetch";
+import { addAlert, editAlert } from "../../components/alerts";
 
 export const CameraType = () =>{
 
@@ -20,9 +21,11 @@ export const CameraType = () =>{
 
           if(values.id){
                dispatch(editCameraTypeAction(values));
-               navigate('/camera-types/')
+               await editAlert();
+               navigate('/camera-types')
           }else{
                dispatch(addCameraTypeAction(values));
+               await addAlert();
                navigate('/camera-types')
           }
      };

@@ -1,23 +1,54 @@
-import React from "react";
-import { CameraForm } from "../../components/camera/CameraForm";
-import * as yup from "yup";
-import Container from '@mui/material/Container';
+import {useEffect, useState} from 'react'
+import { CameraForm } from '../../components/camera/CameraForm'
+import Container from '@mui/material/Container'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate, useParams } from 'react-router-dom'
+import { cameraSchema } from '../../helpers/YupSchemas/camera'
+import { addAlert, editAlert } from '../../components/alerts'
+import { addCameraAction, editCameraAction} from '../../store/camera/actions'
+import { findById } from "../../helpers/fetch";
 
 export const Camera = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const params = useParams()
+  const cameras = useSelector((state) => state.camerasReducer.cameras);
+  const cameraTypes = useSelector(state => state.camerasReducer.cameraTypes);
 
-     const cameraSchema = yup.object().shape({
-          id: yup.string().nullable(),
-          name: yup
-            .string()
-            .min(2, "Too short to be a camera name")
-            .max(240, "Too long to be a camera name")
-            .required("Camera name required"),
-          cameraType: yup.string().nullable(),
-        });
+  const [data, setData] = useState(null);
 
-     return (
-        <Container>
-          <CameraForm cameraSchema={cameraSchema}/>
-        </Container>
-     )
+  const onSubmitCamera = async (values, { setSubmitting, setErrors }) => {
+    if (values.id) {
+       dispatch(editCameraAction(values)) 
+      await editAlert()
+      navigate('/cameras')
+    } else {
+      dispatch(addCameraAction(values))
+      await addAlert()
+      navigate('/cameras')
+    }
+  }
+
+  const getCameraTypeById = () => {
+    const { id } = params;
+
+    const response = findById(cameras, id);
+
+    setData(response[0]);
+}
+
+  useEffect(() => {
+      if(params && params.id) getCameraTypeById();
+  }, [])
+
+  return (
+    <Container>
+      <CameraForm
+        cameraSchema={cameraSchema}
+        cameraTypes={cameraTypes}
+        onSubmitCamera={onSubmitCamera}
+        data={data}
+      />
+    </Container>
+  )
 }

@@ -39,6 +39,7 @@ class List extends Component {
           <Container maxWidth={false}>
           <Box marginTop={'1rem'}>
           <SearchBar
+            placeholder="Search..."
             value={searched}
             onChange={(searchVal) => requestSearch(searchVal)}
             onCancelSearch={() => cancelSearch()}
@@ -56,7 +57,7 @@ class List extends Component {
               </TableHead>
               <TableBody>
                 {data.map((row) => (
-                  <TableRow key={row.name}>
+                  <TableRow key={row.id}>
                     <TableCell component="th" scope="row">
                       {row.id}
                     </TableCell>
@@ -71,10 +72,11 @@ class List extends Component {
                         color="primary"
                         aria-label="outlined primary button group"
                       >
-                        <Button variant="contained" onClick={() => navigate(`/camera-type/${row.id}`)}>
+                        <Button variant="contained" onClick={() => navigate(`/camera-type/${row.id}`)} aria-label="edit_button">
                           <EditIcon />
                         </Button>
                         <Button
+                          aria-label="delete_button"
                           variant="contained"
                           color="secondary"
                           onClick={() => this.handleDelete(row.id)}

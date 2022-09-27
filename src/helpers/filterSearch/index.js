@@ -15,9 +15,24 @@ export const filterSearch = (value, arrayFilter, entity) => {
 
           return filteredRows
      }
-/* 
+ 
      if(entity === 'cameras'){
 
-     } */
+          if(value){
+
+               const response = arrayFilter.filter( item => {
+     
+                    return item.name.toLowerCase().includes(value.toLowerCase()) ||
+                    item.model.toLowerCase().includes(value.toLowerCase()) ||
+                    item.brand.toLowerCase().includes(value.toLowerCase());
+               })
+
+               return response;
+          }else{
+               return arrayFilter;
+          }
+
+
+     }
 
 }
