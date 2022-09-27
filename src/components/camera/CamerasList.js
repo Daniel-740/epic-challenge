@@ -9,9 +9,8 @@ import { Button, ButtonGroup } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import Box from '@mui/material/Box';
+import SearchBar from "material-ui-search-bar";
 
-import { connect  } from "react-redux";
-import { deleteCameraAction } from "../../store/camera/actions";
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import { Link } from 'react-router-dom';
@@ -19,12 +18,18 @@ import { Link } from 'react-router-dom';
 
 class List extends Component {
 
-     handleDelete = (id) => {
-       this.props.deleteCameraAction(id);
-     };
+    handleDelete = (id) => {
+      this.props.onDelete(id);
+    };
+
      render() {
-       const { cameras } = this.props;
+      const { cancelSearch, requestSearch, data, searched, navigate, cameraTypes } = this.props;
    
+      const getNameCameraType = (rowCameraType) => {
+        const dataTypes = cameraTypes.filter(data => data.id === rowCameraType)
+        return `${dataTypes[0].name}`;
+      }
+
        return (
         <>
          <Grid margin={'1.5rem 1rem'} sx={{display: 'flex', justifyContent: 'end'}}>
@@ -38,6 +43,13 @@ class List extends Component {
           </Grid>      
           <Container maxWidth={false}>
           <Box marginTop={'1rem'}>
+          <SearchBar
+            placeholder="Search..."
+            value={searched}
+            onChange={(searchVal) => requestSearch(searchVal)}
+            onCancelSearch={() => cancelSearch()}
+            className="mb2 mt2"
+          />
           <TableContainer>
             <Table aria-label="simple table">
               <TableHead>
@@ -45,12 +57,17 @@ class List extends Component {
                   <TableCell>Id</TableCell>
                   <TableCell>Name</TableCell>
                   <TableCell>Camera Type</TableCell>
+                  <TableCell>Model</TableCell>
+                  <TableCell>Brand</TableCell>
+                  <TableCell>Ubication</TableCell>
+                  <TableCell>Longitude</TableCell>
+                  <TableCell>Latitude</TableCell>
                   <TableCell>Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {cameras.map((row) => (
-                  <TableRow key={row.name}>
+                {data.map((row) => (
+                  <TableRow key={row.id}>
                     <TableCell component="th" scope="row">
                       {row.id}
                     </TableCell>
@@ -58,17 +75,35 @@ class List extends Component {
                       {row.name}
                     </TableCell>
                     <TableCell component="th" scope="row">
-                      {row.cameraType}
+                      {
+                        getNameCameraType(row.cameraType)
+                      }
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {row.model}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {row.brand}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {row.ubication}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {row.longitude}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {row.latitude}
                     </TableCell>
                     <TableCell component="th" scope="row">
                       <ButtonGroup
                         color="primary"
                         aria-label="outlined primary button group"
                       >
-                        <Button variant="contained">
+                        <Button variant="contained" onClick={() => navigate(`/camera/${row.id}`)} aria-label="edit_button">
                           <EditIcon />
                         </Button>
                         <Button
+                          aria-label="delete_button"
                           variant="contained"
                           color="secondary"
                           onClick={() => this.handleDelete(row.id)}
@@ -89,12 +124,6 @@ class List extends Component {
      }
    }
    
-   const mapStateToProps = (state) => ({
-     cameras: state.camerasReducer.cameras,
-   });
+
    
-   const mapDispatchToProps = {
-     deleteCameraAction,
-   };
-   
- export const CamerasList = connect(mapStateToProps, mapDispatchToProps)(List);
+ export const CamerasList = List;

@@ -1,20 +1,21 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import { CameraTypeList } from "../../components/cameraType/CameraTypeList"
 import { useSelector, useDispatch } from "react-redux";
 import { filterSearch } from '../../helpers/filterSearch';
-/* import { ModalCameraTypes } from '../../components/modals/modalCameraTypes'; */
 import { useNavigate } from 'react-router-dom';
 import { deleteCameraTypeAction } from "../../store/camera/actions";
+import { deleteAlert, checkAlert } from '../../components/alerts';
+import { checkRelationCameraType } from '../../helpers/fetch';
 
 export const CameraTypes = () => {
 
      const cameraTypes = useSelector(state => state.camerasReducer.cameraTypes)
+     const camerasArray = useSelector(state => state.camerasReducer.cameras)
      const navigate = useNavigate()
      const dispatch = useDispatch();
 
      const [searched, setSearched] = useState('');
      const [dataTable, setDataTable] = useState(cameraTypes);
-     const [open, setOpen] = useState(false);
 
      const requestSearch = (searchedVal) => {
 
@@ -28,9 +29,21 @@ export const CameraTypes = () => {
           requestSearch(searched);
         };
 
-     const onDelete = (id) => {
-          dispatch(deleteCameraTypeAction(id))
-          setDataTable(dataTable.filter(data => data.id !== id));
+     const onDelete = async (id) => {
+
+          const alert = await deleteAlert();
+
+          if(alert){
+
+               const resp = checkRelationCameraType(camerasArray, id);
+
+               if(!resp) {
+                    dispatch(deleteCameraTypeAction(id))
+                    setDataTable(dataTable.filter(data => data.id !== id));
+               }else{
+                    checkAlert(resp);
+               }
+          }
      }
 
      return(
@@ -40,11 +53,9 @@ export const CameraTypes = () => {
                     requestSearch={requestSearch} 
                     data={dataTable} 
                     searched={searched}
-                    setOpen={setOpen}
                     navigate={navigate}
                     onDelete={onDelete}
                />
-      {/*          <ModalCameraTypes open={open} setOpen={setOpen}/> */}
           </>
      )
 }
